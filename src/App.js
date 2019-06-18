@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 import { GameTypeSearch } from './containers/GameTypeSearch'
 
 function App() {

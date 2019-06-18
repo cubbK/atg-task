@@ -4,6 +4,8 @@ import {
     InputAutocomplete,
     InputButton,
 } from '../components/AutocompleteForm'
+import { useDispatch } from 'react-redux'
+import { fetchRaces } from "redux/actions"
 
 const suggestions = [
     { label: 'V75' },
@@ -19,8 +21,9 @@ export function GameTypeSearch(props) {
         setInputValue(newValue)
     }
 
+    const dispatch = useDispatch()
     function handleSearch() {
-
+      dispatch(fetchRaces(inputValue))
     }
 
     return (
@@ -30,7 +33,7 @@ export function GameTypeSearch(props) {
                 id={'react-autosuggest-simple'}
                 label={'Game Type'}
                 placeholder={
-                    'Search a Game Type(possible values are V75, V65, V64, V4)'
+                    'Search a Game Type(possible values are V75, V65, V64 and V4)'
                 }
                 value={inputValue}
                 onChange={handleInputChange}
