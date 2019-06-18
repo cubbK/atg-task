@@ -1,24 +1,25 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { InputAutocomplete } from "./components/InputAutocomplete";
+
+const suggestions = [
+  { label: "V75" },
+  { label: "V65" },
+  { label: "V64" },
+  { label: "V4" }
+];
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      Hey
+      <InputAutocomplete
+        suggestions={suggestions}
+        id={"react-autosuggest-simple"}
+        label={"Game Type"}
+        placeholder={
+          "Search a Game Type(possible values are V75, V65, V64, V4)"
+        }
+      />
     </div>
   );
 }
