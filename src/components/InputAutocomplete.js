@@ -1,160 +1,165 @@
-import React from 'react';
-import deburr from 'lodash/deburr';
-import Autosuggest from 'react-autosuggest';
-import match from 'autosuggest-highlight/match';
-import parse from 'autosuggest-highlight/parse';
-import TextField from '@material-ui/core/TextField';
-import Paper from '@material-ui/core/Paper';
-import MenuItem from '@material-ui/core/MenuItem';
-import Popper from '@material-ui/core/Popper';
-import { makeStyles } from '@material-ui/core/styles';
+import React from 'react'
+import deburr from 'lodash/deburr'
+import Autosuggest from 'react-autosuggest'
+import match from 'autosuggest-highlight/match'
+import parse from 'autosuggest-highlight/parse'
+import TextField from '@material-ui/core/TextField'
+import Paper from '@material-ui/core/Paper'
+import MenuItem from '@material-ui/core/MenuItem'
+import Popper from '@material-ui/core/Popper'
+import { makeStyles } from '@material-ui/core/styles'
 
 // Straight from the MaterialUI docs https://material-ui.com/components/autocomplete/
 
 function renderInputComponent(inputProps) {
-  const { classes, inputRef = () => {}, ref, ...other } = inputProps;
+    const { classes, inputRef = () => {}, ref, ...other } = inputProps
 
-  return (
-    <TextField
-      fullWidth
-      InputProps={{
-        inputRef: node => {
-          ref(node);
-          inputRef(node);
-        },
-        classes: {
-          input: classes.input,
-        },
-      }}
-      {...other}
-    />
-  );
+    return (
+        <TextField
+            fullWidth
+            InputProps={{
+                inputRef: node => {
+                    ref(node)
+                    inputRef(node)
+                },
+                classes: {
+                    input: classes.input,
+                },
+            }}
+            {...other}
+        />
+    )
 }
 
 function renderSuggestion(suggestion, { query, isHighlighted }) {
-  const matches = match(suggestion.label, query);
-  const parts = parse(suggestion.label, matches);
+    const matches = match(suggestion.label, query)
+    const parts = parse(suggestion.label, matches)
 
-  return (
-    <MenuItem selected={isHighlighted} component="div">
-      <div>
-        {parts.map(part => (
-          <span key={part.text} style={{ fontWeight: part.highlight ? 500 : 400 }}>
-            {part.text}
-          </span>
-        ))}
-      </div>
-    </MenuItem>
-  );
+    return (
+        <MenuItem selected={isHighlighted} component="div">
+            <div>
+                {parts.map(part => (
+                    <span
+                        key={part.text}
+                        style={{ fontWeight: part.highlight ? 500 : 400 }}
+                    >
+                        {part.text}
+                    </span>
+                ))}
+            </div>
+        </MenuItem>
+    )
 }
 
 function getSuggestions(value, suggestions) {
-  const inputValue = deburr(value.trim()).toLowerCase();
-  const inputLength = inputValue.length;
-  let count = 0;
+    const inputValue = deburr(value.trim()).toLowerCase()
+    const inputLength = inputValue.length
+    let count = 0
 
-  return inputLength === 0
-    ? []
-    : suggestions.filter(suggestion => {
-        const keep =
-          count < 5 && suggestion.label.slice(0, inputLength).toLowerCase() === inputValue;
+    return inputLength === 0
+        ? []
+        : suggestions.filter(suggestion => {
+              const keep =
+                  count < 5 &&
+                  suggestion.label.slice(0, inputLength).toLowerCase() ===
+                      inputValue
 
-        if (keep) {
-          count += 1;
-        }
+              if (keep) {
+                  count += 1
+              }
 
-        return keep;
-      });
+              return keep
+          })
 }
 
 function getSuggestionValue(suggestion) {
-  return suggestion.label;
+    return suggestion.label
 }
 
 const useStyles = makeStyles(theme => ({
-  root: {
-    height: 250,
-    flexGrow: 1,
-  },
-  container: {
-    position: 'relative',
-  },
-  suggestionsContainerOpen: {
-    position: 'absolute',
-    zIndex: 1,
-    marginTop: theme.spacing(1),
-    left: 0,
-    right: 0,
-  },
-  suggestion: {
-    display: 'block',
-  },
-  suggestionsList: {
-    margin: 0,
-    padding: 0,
-    listStyleType: 'none',
-  },
-  divider: {
-    height: theme.spacing(2),
-  },
-}));
+    root: {
+        height: 250,
+        flexGrow: 1,
+    },
+    container: {
+        position: 'relative',
+    },
+    suggestionsContainerOpen: {
+        position: 'absolute',
+        zIndex: 1,
+        marginTop: theme.spacing(1),
+        left: 0,
+        right: 0,
+    },
+    suggestion: {
+        display: 'block',
+    },
+    suggestionsList: {
+        margin: 0,
+        padding: 0,
+        listStyleType: 'none',
+    },
+    divider: {
+        height: theme.spacing(2),
+    },
+}))
 
 export function InputAutocomplete(props) {
-  const classes = useStyles();
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const [state, setState] = React.useState({
-    single: '',
-    popper: '',
-  });
+    const classes = useStyles()
+    const [anchorEl, setAnchorEl] = React.useState(null)
+    const [state, setState] = React.useState({
+        single: '',
+        popper: '',
+    })
 
-  const [stateSuggestions, setSuggestions] = React.useState([]);
+    const [stateSuggestions, setSuggestions] = React.useState([])
 
-  const handleSuggestionsFetchRequested = ({ value }) => {
-    setSuggestions(getSuggestions(value, props.suggestions));
-  };
+    const handleSuggestionsFetchRequested = ({ value }) => {
+        setSuggestions(getSuggestions(value, props.suggestions))
+    }
 
-  const handleSuggestionsClearRequested = () => {
-    setSuggestions([]);
-  };
+    const handleSuggestionsClearRequested = () => {
+        setSuggestions([])
+    }
 
-  const handleChange = name => (event, { newValue }) => {
-    setState({
-      ...state,
-      [name]: newValue,
-    });
-  };
+    const handleChange = name => (event, { newValue }) => {
+        setState({
+            ...state,
+            [name]: newValue,
+        })
+    }
 
-  const autosuggestProps = {
-    renderInputComponent,
-    suggestions: stateSuggestions,
-    onSuggestionsFetchRequested: handleSuggestionsFetchRequested,
-    onSuggestionsClearRequested: handleSuggestionsClearRequested,
-    getSuggestionValue,
-    renderSuggestion,
-  };
+    const autosuggestProps = {
+        renderInputComponent,
+        suggestions: stateSuggestions,
+        onSuggestionsFetchRequested: handleSuggestionsFetchRequested,
+        onSuggestionsClearRequested: handleSuggestionsClearRequested,
+        getSuggestionValue,
+        renderSuggestion,
+    }
 
-  return (
-    <div className={classes.root}>
-      <Autosuggest
-        {...autosuggestProps}
-        inputProps={{
-          ...props,
-          classes,
-          value: state.single,
-          onChange: handleChange('single'),
-        }}
-        theme={{
-          container: classes.container,
-          suggestionsContainerOpen: classes.suggestionsContainerOpen,
-          suggestionsList: classes.suggestionsList,
-          suggestion: classes.suggestion,
-        }}
-        renderSuggestionsContainer={options => (
-          <Paper {...options.containerProps} square>
-            {options.children}
-          </Paper>
-        )}
-      />
-    </div>
-  );
+    return (
+        <div className={classes.root}>
+            <Autosuggest
+                {...autosuggestProps}
+                inputProps={{
+                    ...props,
+                    classes,
+                    value: state.single,
+                    onChange: handleChange('single'),
+                }}
+                theme={{
+                    container: classes.container,
+                    suggestionsContainerOpen: classes.suggestionsContainerOpen,
+                    suggestionsList: classes.suggestionsList,
+                    suggestion: classes.suggestion,
+                }}
+                renderSuggestionsContainer={options => (
+                    <Paper {...options.containerProps} square>
+                        {options.children}
+                    </Paper>
+                )}
+            />
+        </div>
+    )
 }
