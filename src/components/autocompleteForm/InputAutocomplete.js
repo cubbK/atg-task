@@ -78,7 +78,6 @@ function getSuggestionValue(suggestion) {
 
 const useStyles = makeStyles(theme => ({
     root: {
-        height: 250,
         flexGrow: 1,
     },
     container: {
@@ -107,10 +106,7 @@ const useStyles = makeStyles(theme => ({
 export function InputAutocomplete(props) {
     const classes = useStyles()
     const [anchorEl, setAnchorEl] = React.useState(null)
-    const [state, setState] = React.useState({
-        single: '',
-        popper: '',
-    })
+    
 
     const [stateSuggestions, setSuggestions] = React.useState([])
 
@@ -122,12 +118,7 @@ export function InputAutocomplete(props) {
         setSuggestions([])
     }
 
-    const handleChange = name => (event, { newValue }) => {
-        setState({
-            ...state,
-            [name]: newValue,
-        })
-    }
+    
 
     const autosuggestProps = {
         renderInputComponent,
@@ -145,8 +136,7 @@ export function InputAutocomplete(props) {
                 inputProps={{
                     ...props,
                     classes,
-                    value: state.single,
-                    onChange: handleChange('single'),
+                    value: props.value,
                 }}
                 theme={{
                     container: classes.container,
