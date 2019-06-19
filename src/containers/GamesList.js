@@ -47,8 +47,8 @@ export function GamesList() {
                 Upcoming Games
             </Typography>
             {upcomingGames.data.map(game => (
-                <React.Fragment>
-                    <GameCardStateful game={game} key={game.id} />
+                <React.Fragment key={game.id}>
+                    <GameCardStateful game={game}  />
                     <Divider />
                 </React.Fragment>
             ))}
