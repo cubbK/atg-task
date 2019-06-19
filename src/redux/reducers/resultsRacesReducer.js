@@ -5,17 +5,18 @@ export const resultsRacesReducer = createReducer({
   error: null,
   loading: false
 }, {
-  ADD_TODO: (state, action) => {
+  FETCH_RACES_PENDING: (state, action) => {
     // "mutate" the array by calling push()
-    state.push(action.payload)
+    state.loading = true
+    state.data = []
+    state.error =  null
   },
-  TOGGLE_TODO: (state, action) => {
-    const todo = state[action.payload.index]
-    // "mutate" the object by overwriting a field
-    todo.completed = !todo.completed
+  FETCH_RACES_FULFILLED: (state, action) => {
+    state.data = action.payload.data.results
+    state.loading = false
   },
-  REMOVE_TODO: (state, action) => {
-    // Can still return an immutably-updated value if we want to
-    return state.filter((todo, i) => i !== action.payload.index)
+  FETCH_RACES_REJECTED: (state, action) => {
+    state.loading = false
+    state.error = action.payload.message
   }
 })

@@ -1,23 +1,12 @@
 import axios from 'axios'
+const serverUrl = 'http://localhost:3001/'
 
 export function fetchRaces(raceType) {
-    console.log(
-        'https://www.atg.se/services/racinginfo/v1/api/products/' +
-            raceType.toUpperCase()
-    )
+    const request = axios
+        .get(serverUrl + 'products/' + raceType.toUpperCase(), {})
+        .then(request => console.log(request.data))
     return {
         type: 'FETCH_RACES',
-        payload: axios.get(
-            'https://www.atg.se/services/racinginfo/v1/api/products/' +
-                raceType.toUpperCase(),
-            {
-                mode: 'no-cors',
-                headers: {
-                  'Access-Control-Allow-Origin': '*',
-                  Accept: 'application/json',
-                  'Content-Type': 'application/json',
-                },
-            }
-        ),
+        payload: axios.get(serverUrl + 'products/' + raceType.toUpperCase()),
     }
 }

@@ -14,13 +14,15 @@ router.get('/games/:id', async (ctx, next) => {
 })
 router.get('/products/:id', async (ctx, next) => {
     const request = await axios.get(
-        'https://www.atg.se/services/racinginfo/v1/api/products/' + ctx.params.id
+        'https://www.atg.se/services/racinginfo/v1/api/products/' +
+            ctx.params.id
     )
     ctx.body = request.data
 })
 
-app.use(router.routes()).use(router.allowedMethods())
 app.use(cors())
+app.use(router.routes())
+app.use(router.allowedMethods())
 
 console.log('server running')
 app.listen(3001)
