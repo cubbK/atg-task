@@ -2,6 +2,7 @@ import React from 'react'
 import { useSelector } from 'react-redux'
 import Typography from '@material-ui/core/Typography'
 import { GameCardStateful } from './GameCardStateful'
+import Divider from '@material-ui/core/Divider';
 
 export function GamesList() {
     const upcomingGames = useSelector(state => state.upcomingGames)
@@ -46,7 +47,10 @@ export function GamesList() {
                 Upcoming Games
             </Typography>
             {upcomingGames.data.map(game => (
-                <GameCardStateful game={game} key={game.id} />
+                <React.Fragment>
+                    <GameCardStateful game={game} key={game.id} />
+                    <Divider />
+                </React.Fragment>
             ))}
         </React.Fragment>
     )

@@ -9,8 +9,11 @@ export function RaceCard(props) {
     const { race } = props
     return (
         <div>
-            Number: {race.number} - Name: {race.name} - Start Time:{' '}
-            {race.startTime}
+            <Typography variant="h5" component="div">
+                Race Number: {race.number} - Race Name: {race.name} - Race Start
+                Time: {race.startTime}
+            </Typography>
+
             <div>
                 {race.starts.map(data => (
                     <RaceStart data={data} key={data.number} />
@@ -38,7 +41,11 @@ function RaceStart(props) {
             </ExpansionPanelSummary>
             <ExpansionPanelDetails>
                 <Typography>
-                    Trainer: {`${data.horse.trainer.firstName} ${data.horse.trainer.lastName}`} - Father: {data.horse.pedigree.father.name}
+                    Trainer:{' '}
+                    {`${data.horse.trainer.firstName} ${
+                        data.horse.trainer.lastName
+                    }`}{' '}
+                    - Father: {data.horse.pedigree.father.name}
                 </Typography>
             </ExpansionPanelDetails>
         </ExpansionPanel>

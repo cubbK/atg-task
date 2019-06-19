@@ -8,14 +8,15 @@ export function GameCard(props) {
     return (
         <Card>
             <CardContent>
-                <Typography color="textSecondary" gutterBottom>
+                <Typography color="textSecondary" variant="h4" component="div">
                     Id: {props.game && props.game.id}
                 </Typography>
-                <Typography variant="subtitle1" component="h5">
+                <Typography variant="h5" component="div">
                     Start Time: {props.game && props.game.startTime}
                 </Typography>
+                {props.children}
             </CardContent>
-            {props.children}
+            
         </Card>
     )
 }

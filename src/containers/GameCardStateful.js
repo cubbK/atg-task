@@ -52,7 +52,7 @@ export function GameCardStateful(props) {
       <GameCard game={props.game} key={props.game.id}>
           {game.loading === false && Object.entries(game.data).length === 0 && (
               <CardActions>
-                  <Button onClick={handleMoreClick}>More</Button>
+                  <Button size="medium" onClick={handleMoreClick}>More</Button>
               </CardActions>
           )}
           {game.loading && 'Loading'}
