@@ -4,15 +4,22 @@ import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary'
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails'
 import Typography from '@material-ui/core/Typography'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
+import styled from 'styled-components'
+
+const RaceTitle = styled(Typography)`
+  && {
+    padding: 15px 0;
+  }
+`
 
 export function RaceCard(props) {
     const { race } = props
     return (
         <div>
-            <Typography variant="h5" component="div">
+            <RaceTitle variant="h5" component="div">
                 Race Number: {race.number} - Race Name: {race.name} - Race Start
                 Time: {race.startTime}
-            </Typography>
+            </RaceTitle>
 
             <div>
                 {race.starts.map(data => (
