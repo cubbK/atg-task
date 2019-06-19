@@ -1,13 +1,13 @@
 import React from 'react'
 import { GameTypeSearch } from './containers/GameTypeSearch'
-import { RacesList } from './containers/RacesList'
+import { GamesList } from './containers/GamesList'
 
 function App() {
     return (
         <div>
             Hey
             <GameTypeSearch />
-            <RacesList />
+            <GamesList />
         </div>
     )
 }

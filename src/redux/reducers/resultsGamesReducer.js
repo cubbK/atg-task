@@ -1,6 +1,6 @@
 import { createReducer } from "redux-starter-kit"
 
-export const upcomingRacesReducer = createReducer({
+export const resultsGamesReducer = createReducer({
   data: [],
   error: null,
   loading: false
@@ -12,7 +12,7 @@ export const upcomingRacesReducer = createReducer({
     state.error =  null
   },
   FETCH_RACES_FULFILLED: (state, action) => {
-    state.data = action.payload.data.upcoming
+    state.data = action.payload.data.results
     state.loading = false
   },
   FETCH_RACES_REJECTED: (state, action) => {
